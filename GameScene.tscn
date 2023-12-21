@@ -1,8 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://duovmptim2lyy"]
+[gd_scene load_steps=27 format=3 uid="uid://duovmptim2lyy"]
 
 [ext_resource type="ArrayMesh" uid="uid://crhr3it3l8bt1" path="res://Models/Terrain.obj" id="1_4bl4f"]
 [ext_resource type="Script" path="res://Player.gd" id="2_i6qt3"]
+[ext_resource type="Script" path="res://PlayersNeeds.gd" id="3_0hxg5"]
 [ext_resource type="Script" path="res://Skycle.gd" id="3_bug5y"]
+[ext_resource type="Script" path="res://Need.gd" id="3_ci0i1"]
+[ext_resource type="PackedScene" uid="uid://cpu0plkb7u8xg" path="res://needUIBar.tscn" id="3_hvanx"]
+[ext_resource type="PackedScene" uid="uid://dwlv7j2rinv23" path="res://tree.tscn" id="4_pq5e7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w64wt"]
 albedo_color = Color(0.227001, 0.634392, 0.250761, 1)
@@ -17,11 +21,58 @@ data = PackedVector3Array(-24.4949, -1.3, 25, -25, -1.3, 25, -24.4949, -1.3, 24.
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_covrf"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u7fyn"]
+bg_color = Color(0.992188, 0.261719, 0.179688, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_juini"]
+bg_color = Color(0.901961, 0.458824, 0.172549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_062r3"]
+bg_color = Color(0.121569, 0.647059, 0.886275, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h3ctr"]
+bg_color = Color(0.556863, 0.580392, 0.796078, 1)
+
+[sub_resource type="Gradient" id="Gradient_m2kwa"]
+offsets = PackedFloat32Array(0.1, 0.4, 0.6, 0.9)
+colors = PackedColorArray(0.308594, 0.351563, 0.65625, 1, 0.117647, 0.811765, 0.882353, 1, 0.117647, 0.811765, 0.882353, 1, 0.308594, 0.351563, 0.65625, 1)
+
+[sub_resource type="Gradient" id="Gradient_hs6kl"]
+offsets = PackedFloat32Array(0.1, 0.3, 0.4, 0.6, 0.8, 0.9)
+colors = PackedColorArray(0.308594, 0.351563, 0.664063, 1, 0.90625, 0.546875, 0.40625, 1, 0.125, 0.796875, 0.882813, 1, 0.125, 0.800781, 0.886719, 1, 0.902344, 0.542969, 0.40625, 1, 0.308594, 0.351563, 0.660156, 1)
+
+[sub_resource type="Gradient" id="Gradient_rcas1"]
+offsets = PackedFloat32Array(0, 0.2, 0.8, 1)
+colors = PackedColorArray(0.309804, 0.266667, 0.815686, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.309804, 0.266667, 0.815686, 1)
+
+[sub_resource type="Curve" id="Curve_3il2m"]
+_data = [Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.25, 0), 0.0, 0.0, 0, 0, Vector2(0.75, 0), 0.0, 0.0, 0, 0, Vector2(0.8, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_pqv10"]
+offsets = PackedFloat32Array(0, 0.3, 0.7, 1)
+colors = PackedColorArray(0.996094, 0.605469, 0.230469, 1, 0.964844, 0.914063, 0.863281, 1, 0.988281, 0.949219, 0.875, 1, 0.992188, 0.601563, 0.230469, 1)
+
+[sub_resource type="Curve" id="Curve_263qi"]
+_data = [Vector2(0.2, 0), 0.0, 0.0, 0, 0, Vector2(0.247191, 1), 0.0, 0.0, 0, 0, Vector2(0.75, 1), 0.0, 0.0, 0, 0, Vector2(0.8, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mvnk1"]
+sky_top_color = Color(0.14902, 0.54902, 0.92549, 1)
+sky_horizon_color = Color(0.475444, 0.739398, 1, 1)
+ground_bottom_color = Color(0, 0.54902, 0.92549, 1)
+ground_horizon_color = Color(0.475444, 0.739398, 1, 1)
+
 [sub_resource type="Sky" id="Sky_s0x2d"]
+sky_material = SubResource("ProceduralSkyMaterial_mvnk1")
 
 [sub_resource type="Environment" id="Environment_rsaoj"]
 background_mode = 2
 sky = SubResource("Sky_s0x2d")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fclse"]
+height = 7.10473
+radius = 0.736472
 
 [node name="Main" type="Node3D"]
 
@@ -37,26 +88,92 @@ surface_material_override/1 = SubResource("StandardMaterial3D_2qkn1")
 shape = SubResource("ConcavePolygonShape3D_p7kd8")
 
 [node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25235, 0)
 script = ExtResource("2_i6qt3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_3n5ij")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_covrf")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0.349932, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.406865, 0.349932, 0)
 current = true
 
 [node name="Head" type="Node3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="PlayerNeeds" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.25235, 0)
+script = ExtResource("3_0hxg5")
+
+[node name="Health" type="Node" parent="Player/PlayerNeeds" node_paths=PackedStringArray("ui_bar")]
+script = ExtResource("3_ci0i1")
+max_value = 100.0
+start_value = 80.0
+ui_bar = NodePath("NeedBar")
+
+[node name="NeedBar" parent="Player/PlayerNeeds/Health" instance=ExtResource("3_hvanx")]
+offset_left = 47.0
+offset_top = 550.0
+offset_right = 346.0
+offset_bottom = 596.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_u7fyn")
+need_name = "Health"
+
+[node name="Hunger" type="Node" parent="Player/PlayerNeeds" node_paths=PackedStringArray("ui_bar")]
+script = ExtResource("3_ci0i1")
+max_value = 100.0
+start_value = 70.0
+decay_rate = 1.0
+ui_bar = NodePath("NeedBar")
+
+[node name="NeedBar" parent="Player/PlayerNeeds/Hunger" instance=ExtResource("3_hvanx")]
+offset_left = 45.0
+offset_top = 365.0
+offset_right = 344.0
+offset_bottom = 411.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_juini")
+need_name = "Hunger"
+
+[node name="Thirst" type="Node" parent="Player/PlayerNeeds" node_paths=PackedStringArray("ui_bar")]
+script = ExtResource("3_ci0i1")
+max_value = 100.0
+start_value = 80.0
+decay_rate = 1.5
+ui_bar = NodePath("NeedBar")
+
+[node name="NeedBar" parent="Player/PlayerNeeds/Thirst" instance=ExtResource("3_hvanx")]
+offset_left = 45.0
+offset_top = 488.0
+offset_right = 344.0
+offset_bottom = 534.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_062r3")
+need_name = "Thirst"
+
+[node name="Sleep" type="Node" parent="Player/PlayerNeeds" node_paths=PackedStringArray("ui_bar")]
+script = ExtResource("3_ci0i1")
+max_value = 100.0
+regen_rate = 1.0
+ui_bar = NodePath("NeedBar")
+
+[node name="NeedBar" parent="Player/PlayerNeeds/Sleep" instance=ExtResource("3_hvanx")]
+offset_left = 45.0
+offset_top = 427.0
+offset_right = 344.0
+offset_bottom = 473.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_h3ctr")
+need_name = "Sleep"
 
 [node name="Skycle" type="Node3D" parent="."]
 script = ExtResource("3_bug5y")
+sky_top_color = SubResource("Gradient_m2kwa")
+sky_horizon_color = SubResource("Gradient_hs6kl")
+moon_color = SubResource("Gradient_rcas1")
+moon_intensity = SubResource("Curve_3il2m")
+sun_color = SubResource("Gradient_pqv10")
+sun_intensity = SubResource("Curve_263qi")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Skycle"]
 environment = SubResource("Environment_rsaoj")
@@ -67,6 +184,42 @@ shadow_enabled = true
 
 [node name="Moon" type="DirectionalLight3D" parent="Skycle"]
 transform = Transform3D(1, 0, 0, 0, 0.976424, 0.21586, 0, -0.21586, 0.976424, 0, 6.28151, 10.1993)
-visible = false
 shadow_enabled = true
 sky_mode = 1
+
+[node name="Trees" type="Node" parent="."]
+
+[node name="Tree" parent="Trees" instance=ExtResource("4_pq5e7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.0515, 1.46217, -7.09992)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Trees/Tree"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.29359, 0)
+shape = SubResource("CylinderShape3D_fclse")
+
+[node name="Tree2" parent="Trees" instance=ExtResource("4_pq5e7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.70131, 1.59001, -7.09992)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Trees/Tree2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.24532, 0)
+shape = SubResource("CylinderShape3D_fclse")
+
+[node name="Tree3" parent="Trees" instance=ExtResource("4_pq5e7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.92678, 0.919753, 5.78879)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Trees/Tree3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.79659, 0)
+shape = SubResource("CylinderShape3D_fclse")
+
+[node name="Tree4" parent="Trees" instance=ExtResource("4_pq5e7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.9343, 0.8209, 11.6586)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Trees/Tree4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.47846, 0)
+shape = SubResource("CylinderShape3D_fclse")
+
+[node name="Tree5" parent="Trees" instance=ExtResource("4_pq5e7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.50856, 1.11544, 4.5644)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Trees/Tree5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.55355, 0)
+shape = SubResource("CylinderShape3D_fclse")

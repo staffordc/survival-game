@@ -12,6 +12,12 @@ var max_x_rot : float = 85
 
 var mouse_dir : Vector2
 
+
+#"Head" is used so we don't have the camera freak out with the model
+#this was not adequtely explained in the tutorial, and was a priori
+
+#camera is being removed from head (dunno why) and placed onto "Main"
+#call deferred so it isn't immediately flipping when that's an empty node .3s
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CONFINED_HIDDEN
 	camera = get_node("Camera3D")
@@ -20,10 +26,12 @@ func _ready():
 	get_node("/root/Main").add_child.call_deferred(camera)
 	
 func _input(event):
+	# if mouse move:
 	if event is InputEventMouseMotion:
+		#vertical clamps
 		camera.rotation_degrees.x += event.relative.y * -look_sens
 		camera.rotation_degrees.x = clamp(camera.rotation_degrees.x, min_x_rot, max_x_rot)
-		
+		#horizontal control
 		camera.rotation_degrees.y += event.relative.x * -look_sens
 	
 func _process(delta): 
