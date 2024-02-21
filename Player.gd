@@ -6,7 +6,7 @@ var head: Node3D
 var move_speed : float = 5.0
 var jump_force : float = 5.0
 var gravity : float = 9.0
-var look_sens : float = .5
+var look_sens : float = .8
 var min_x_rot : float = -85
 var max_x_rot : float = 85
 
@@ -14,7 +14,7 @@ var mouse_dir : Vector2
 
 
 #"Head" is used so we don't have the camera freak out with the model
-#this was not adequtely explained in the tutorial, and was a priori
+#this was not adequtely explained in the tutorial, and was a priori reasoning
 
 #camera is being removed from head (dunno why) and placed onto "Main"
 #call deferred so it isn't immediately flipping when that's an empty node .3s
@@ -40,6 +40,7 @@ func _process(delta):
 func _physics_process(delta):
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_force
+		#gravity applies only when player is not on the ground
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 		
